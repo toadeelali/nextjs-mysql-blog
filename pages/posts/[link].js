@@ -15,14 +15,14 @@ export default function Post({ postData }) {
         <div className={utilStyles.lightText}>
           <Date dateString={postData.date} />
         </div>
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+        <div dangerouslySetInnerHTML={{ __html: postData.post }} />
       </article>
     </Layout>
   )
 };
 
 export async function getStaticPaths() {
-  const paths = getAllPostIds()
+  const paths = await getAllPostIds();
   return {
     paths,
     fallback: false
@@ -30,7 +30,7 @@ export async function getStaticPaths() {
 };
 
 export async function getStaticProps({ params }) {
-  const postData = await getPostData(params.id)
+  const postData = await getPostData(params.link);
   return {
     props: {
       postData
